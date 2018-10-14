@@ -4,33 +4,42 @@
 #
 Name     : perl-Text-FindIndent
 Version  : 0.11
-Release  : 1
+Release  : 2
 URL      : https://cpan.metacpan.org/authors/id/C/CH/CHORNY/Text-FindIndent-0.11.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/C/CH/CHORNY/Text-FindIndent-0.11.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libt/libtext-findindent-perl/libtext-findindent-perl_0.11-1.debian.tar.xz
 Summary  : 'Heuristically determine the indent style'
 Group    : Development/Tools
-License  : Artistic-1.0-Perl
-Requires: perl-Text-FindIndent-man
-Requires: perl(Module::Install::DSL)
+License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
+Requires: perl-Text-FindIndent-license = %{version}-%{release}
+BuildRequires : buildreq-cpan
 BuildRequires : perl(Module::Install::DSL)
 
 %description
 No detailed description available
 
-%package man
-Summary: man components for the perl-Text-FindIndent package.
+%package dev
+Summary: dev components for the perl-Text-FindIndent package.
+Group: Development
+Provides: perl-Text-FindIndent-devel = %{version}-%{release}
+
+%description dev
+dev components for the perl-Text-FindIndent package.
+
+
+%package license
+Summary: license components for the perl-Text-FindIndent package.
 Group: Default
 
-%description man
-man components for the perl-Text-FindIndent package.
+%description license
+license components for the perl-Text-FindIndent package.
 
 
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n Text-FindIndent-0.11
-mkdir -p %{_topdir}/BUILD/Text-FindIndent-0.11/deblicense/
+cd ..
+%setup -q -T -D -n Text-FindIndent-0.11 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Text-FindIndent-0.11/deblicense/
 
 %build
@@ -55,10 +64,12 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-Text-FindIndent
+cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Text-FindIndent/deblicense_copyright
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -67,8 +78,12 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/Text/FindIndent.pm
+/usr/lib/perl5/vendor_perl/5.26.1/Text/FindIndent.pm
 
-%files man
+%files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/Text::FindIndent.3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-Text-FindIndent/deblicense_copyright
