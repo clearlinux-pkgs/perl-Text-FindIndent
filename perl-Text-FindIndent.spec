@@ -4,7 +4,7 @@
 #
 Name     : perl-Text-FindIndent
 Version  : 0.11
-Release  : 15
+Release  : 16
 URL      : https://cpan.metacpan.org/authors/id/C/CH/CHORNY/Text-FindIndent-0.11.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/C/CH/CHORNY/Text-FindIndent-0.11.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libt/libtext-findindent-perl/libtext-findindent-perl_0.11-1.debian.tar.xz
@@ -101,4 +101,4 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.34.0/Text/FindIndent.pm
+/usr/lib/perl5/*
