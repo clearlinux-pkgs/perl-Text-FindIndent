@@ -5,7 +5,7 @@
 #
 Name     : perl-Text-FindIndent
 Version  : 0.11
-Release  : 17
+Release  : 18
 URL      : https://cpan.metacpan.org/authors/id/C/CH/CHORNY/Text-FindIndent-0.11.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/C/CH/CHORNY/Text-FindIndent-0.11.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libt/libtext-findindent-perl/libtext-findindent-perl_0.11-1.debian.tar.xz
